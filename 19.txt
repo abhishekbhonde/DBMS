@@ -1,0 +1,30 @@
+a) SELECT 
+    SUM(Salary) AS TotalSalary,
+    MAX(Salary) AS MaxSalary,
+    MIN(Salary) AS MinSalary,
+    AVG(Salary) AS AvgSalary
+FROM
+    EMPLOYEE
+WHERE
+    DNo = (SELECT DNo FROM DEPARTMENT WHERE DName = 'Accounts');
+
+b) SELECT
+    E.Name
+FROM
+    EMPLOYEE E
+WHERE
+    NOT EXISTS (
+        SELECT
+            PNo
+        FROM
+            PROJECT
+        WHERE
+            DNo = 5
+        MINUS
+        SELECT
+            W.PNo
+        FROM
+            WORKS_ON W
+        WHERE
+            W.SSN = E.SSN
+    );

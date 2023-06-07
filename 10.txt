@@ -1,0 +1,16 @@
+a)  db.Book.updateMany(
+  { "publisher_name": "Tata MacGraw Hill" },
+  { $set: { "copies": "10" } }
+)
+
+b) db.Book.aggregate([
+  { $group: { _id: "$publisher_name", count: { $sum: 1 } } },
+  { $sort: { count: 1 } },
+  { $project: { _id: 0, publisher_name: "$_id", book_count: "$count" } }
+])
+
+c) db.Book.distinct("publisher_name", { "author.name": /^K/ })
+
+d) db.Book.deleteMany({ "author.name": "Korth" })
+
+e) db.Book.find({ "author.name": "John Doe" })

@@ -1,0 +1,19 @@
+a) SELECT DNo, COUNT(*) AS NumEmployees
+FROM EMPLOYEE
+WHERE Salary > 600000
+GROUP BY DNo
+HAVING COUNT(*) > 5;
+
+b) UPDATE EMPLOYEE
+SET Salary = Salary * 1.10
+WHERE SSN IN (
+    SELECT SSN
+    FROM WORKS_ON
+    WHERE PNo IN (
+        SELECT PNo
+        FROM PROJECT
+        WHERE PName = 'IoT'
+    )
+);
+
+c) 

@@ -1,0 +1,40 @@
+DECLARE
+  v_roll_no Borrower.Rollin%TYPE;
+  v_book_name Borrower.NameofBook%TYPE;
+  v_date_of_issue Borrower.DateofIssue%TYPE;
+  v_status Borrower.Status%TYPE;
+  v_fine_amt Fine.Amt%TYPE;
+  v_fine_days NUMBER;
+BEGIN
+  -- Step a: Accept roll_no & name of book from user
+  v_roll_no := &enter_roll_no;
+  v_book_name := '&enter_book_name';
+
+  -- Step b: Check the number of days (from date of issue)
+  SELECT DateofIssue, Status
+  INTO v_date_of_issue, v_status
+  FROM Borrower
+  WHERE Rollin = v_roll_no AND NameofBook = v_book_name;
+
+  v_fine_days := TRUNC(SYSDATE) - v_date_of_issue;
+
+  -- Step c: Calculate the fine amount based on the number of days
+  IF v_fine_days <= 30 THEN
+    v_fine_amt := v_fine_days * 5;
+  ELSE
+    v_fine_amt := v_fine_days * 50;
+  END IF;
+
+  -- Step d: Update the status to 'R' (Returned)
+  UPDATE Borrower
+  SET Status = 'R'
+  WHERE Rollin = v_roll_no AND NameofBook = v_book_name;
+
+  -- Step e: Store details into the fine table if a fine is applicable
+  IF v_fine_amt > 0 THEN
+    INSERT INTO Fine (Roll_no, Date, Amt)
+    VALUES (v_roll_no, SYSDATE, v_fine_amt);
+  END IF;
+
+  -- Display the fine amount
+  DBMS_OUTPUT.PUT_LINE('Fine amount: Rs '

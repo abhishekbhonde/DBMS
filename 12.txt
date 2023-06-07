@@ -1,0 +1,21 @@
+a) db.ORDERS.aggregate([
+  { $group: { _id: "$cust_id", total: { $sum: "$price" } } },
+  { $sort: { total: 1 } }
+])
+
+b) db.ORDERS.aggregate([
+  { $group: { _id: { cust_id: "$cust_id", ord_date: "$ord_date" }, total: { $sum: "$price" } } }
+])
+
+c) db.ORDERS.aggregate([
+  { $group: { _id: "$cust_id", count: { $sum: 1 } } },
+  { $match: { count: { $gt: 1 } } },
+  { $project: { _id: 1, count: 1 } }
+])
+
+d) db.ORDERS.aggregate([
+  { $match: { status: "A" } },
+  { $group: { _id: "$cust_id", total: { $sum: "$price" } } }
+])
+
+db.ORDERS.createIndex({ "cust_id": 1 })

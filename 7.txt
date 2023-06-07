@@ -1,0 +1,27 @@
+CREATE OR REPLACE PROCEDURE proc_Grade (
+    p_student_marks IN NUMBER,
+    p_grade OUT VARCHAR2
+)
+IS
+BEGIN
+    IF p_student_marks >= 990 AND p_student_marks <= 1500 THEN
+        p_grade := 'Distinction';
+    ELSIF p_student_marks >= 900 AND p_student_marks <= 989 THEN
+        p_grade := 'First Class';
+    ELSIF p_student_marks >= 825 AND p_student_marks <= 899 THEN
+        p_grade := 'Higher Second Class';
+    ELSE
+        p_grade := 'Not Categorized';
+    END IF;
+END;
+/
+
+
+DECLARE
+    v_marks NUMBER := 950;
+    v_student_grade VARCHAR2(20);
+BEGIN
+    proc_Grade(v_marks, v_student_grade);
+    DBMS_OUTPUT.PUT_LINE('Student Grade: ' || v_student_grade);
+END;
+/

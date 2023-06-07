@@ -1,0 +1,16 @@
+a) db.ORDERS.count()
+
+b) db.ORDERS.aggregate([
+  { $group: { _id: null, total: { $sum: "$price" } } }
+])
+
+c) db.ORDERS.aggregate([
+  { $group: { _id: "$cust_id", total: { $sum: "$price" } } }
+])
+
+d) db.ORDERS.aggregate([
+  { $group: { _id: "$cust_id", total: { $sum: "$price" } } },
+  { $sort: { total: 1 } }
+])
+
+db.ORDERS.createIndex({ "cust_id": 1 })

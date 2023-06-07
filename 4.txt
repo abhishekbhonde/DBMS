@@ -1,0 +1,17 @@
+a) SELECT B.Book_ISBN, B.Title, BA.Author_Name
+FROM BOOK B
+INNER JOIN BOOK_AUTHORS BA ON B.Book_ISBN = BA.Book_ISBN;
+
+b) SELECT B.Book_ISBN, B.Title, B.Publisher_Name, BA.Author_Name
+FROM BOOK B
+LEFT OUTER JOIN BOOK_AUTHORS BA ON B.Book_ISBN = BA.Book_ISBN;
+
+c) SELECT B.Book_ISBN, B.Title, B.Publisher_Name, BA.Author_Name
+FROM BOOK B
+RIGHT OUTER JOIN BOOK_AUTHORS BA ON B.Book_ISBN = BA.Book_ISBN;
+
+d) SELECT B.Book_ISBN, B.Title
+FROM BOOK B
+INNER JOIN BOOK_AUTHORS BA ON B.Book_ISBN = BA.Book_ISBN
+WHERE BA.Author_City = 'Pune';
+

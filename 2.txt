@@ -1,0 +1,56 @@
+a) -- Insert records into the BOOK table
+INSERT INTO BOOK (Book_ISBN, Title, Publisher_Name, Price, Date_Of_Publication, Book_Copy)
+VALUES (1, 'Book 1', 'Publisher 1', 10.99, '2021-01-01', 20);
+
+INSERT INTO BOOK (Book_ISBN, Title, Publisher_Name, Price, Date_Of_Publication, Book_Copy)
+VALUES (2, 'Book 2', 'Publisher 2', 15.50, '2022-02-02', 10);
+
+INSERT INTO BOOK (Book_ISBN, Title, Publisher_Name, Price, Date_Of_Publication, Book_Copy)
+VALUES (3, 'Book 3', 'Publisher 1', 12.75, '2020-03-03', 5);
+
+INSERT INTO BOOK (Book_ISBN, Title, Publisher_Name, Price, Date_Of_Publication, Book_Copy)
+VALUES (4, 'Book 4', 'Publisher 3', 8.99, '2023-04-04', 12);
+
+INSERT INTO BOOK (Book_ISBN, Title, Publisher_Name, Price, Date_Of_Publication, Book_Copy)
+VALUES (5, 'Book 5', 'Publisher 2', 9.50, '2022-05-05', 15);
+
+-- Insert records into the BOOK_AUTHORS table
+INSERT INTO BOOK_AUTHORS (Book_ISBN, Author_Name, Author_City)
+VALUES (1, 'Author 1', 'Pune');
+
+INSERT INTO BOOK_AUTHORS (Book_ISBN, Author_Name, Author_City)
+VALUES (2, 'Author 2', 'Mumbai');
+
+INSERT INTO BOOK_AUTHORS (Book_ISBN, Author_Name, Author_City)
+VALUES (3, 'Author 1', 'Pune');
+
+INSERT INTO BOOK_AUTHORS (Book_ISBN, Author_Name, Author_City)
+VALUES (4, 'Author 3', 'Delhi');
+
+INSERT INTO BOOK_AUTHORS (Book_ISBN, Author_Name, Author_City)
+VALUES (5, 'Author 2', 'Mumbai');
+
+b) SELECT B.*
+FROM BOOK B
+JOIN BOOK_AUTHORS BA ON B.Book_ISBN = BA.Book_ISBN
+WHERE BA.Author_City = 'Pune';
+
+c)SELECT Title
+FROM BOOK
+WHERE Book_Copy BETWEEN 10 AND 15;
+
+d) UPDATE BOOK
+SET Book_Copy = 10
+WHERE Publisher_Name = 'Tata MacGraw Hill';
+
+e) SELECT Publisher_Name
+FROM BOOK
+GROUP BY Publisher_Name
+HAVING COUNT(*) = (
+    SELECT MAX(Book_Count)
+    FROM (
+        SELECT Publisher_Name, COUNT(*) AS Book_Count
+        FROM BOOK
+        GROUP BY Publisher_Name
+    ) AS T
+);

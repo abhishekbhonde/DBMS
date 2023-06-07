@@ -1,0 +1,33 @@
+a)use mydatabase  // Use your desired database name
+db.createCollection("Book")
+
+db.Book.insertMany([
+  {
+    "book_isbn": "ISBN001",
+    "title": "Book 1",
+    "publisher_name": "Publisher 1",
+    "author": {
+      "name": "Author 1",
+      "address": "Address 1",
+      "phone_no": {
+        "landline": "1234567890",
+        "mobile": "9876543210"
+      }
+    },
+    "publisher_city": "Pune",
+    "price": 9.99,
+    "copies": 10
+  },
+  // Add more documents here...
+])
+
+b) db.Book.find({ "publisher_city": "Pune" })
+
+c) db.Book.deleteMany({ "title": /^D/ })
+
+d) db.Book.updateMany(
+  { "publisher_name": "Pearson" },
+  { $set: { "publisher_city": "Pune" } }
+)
+
+e)db.Book.find({ "publisher_name": "Pearson" })

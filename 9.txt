@@ -1,0 +1,12 @@
+a)db.Book.countDocuments()
+
+b) db.Book.find().sort({ "book_isbn": -1 })
+
+c) db.Book.find({ "title": "DBMS" }, { "title": 1 })
+
+d) db.Book.updateMany(
+  { "publisher_name": "Tata MacGraw Hill" },
+  { $set: { "copies": "10" } }
+)
+
+e) db.Book.find({ "author.name": "John Doe" })

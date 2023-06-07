@@ -1,0 +1,23 @@
+a) SELECT * FROM Employee;
+
+b) SELECT EmployeeNumber, Salary FROM Employee;
+
+c) SELECT AVG(Salary) AS AverageSalary FROM Employee;
+
+d) SELECT COUNT(*) AS NumberOfEmployees FROM Employee;
+
+e) SELECT COUNT(DISTINCT EmployeeNumber) AS DistinctNumberOfEmployees FROM Employee;
+
+f) SELECT EmployeeName, SUM(Salary) AS TotalSalary, COUNT(*) AS NameCount
+FROM Employee
+GROUP BY EmployeeName;
+
+g) SELECT SUM(Salary) AS TotalSalary
+FROM Employee
+WHERE Salary > 120000;
+
+h) SELECT EmployeeName FROM Employee
+ORDER BY EmployeeName DESC;
+
+i) SELECT * FROM Employee
+WHERE EmployeeName = 'AMIT' AND Salary > 50000;

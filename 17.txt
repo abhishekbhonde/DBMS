@@ -1,0 +1,35 @@
+DECLARE
+  -- Declare variables to store employee information
+  emp_number EMPLOYEE.EmpNo%TYPE;
+  emp_name EMPLOYEE.Name%TYPE;
+  emp_salary EMPLOYEE.Salary%TYPE;
+  emp_designation EMPLOYEE.Designation%TYPE;
+  emp_dept_id EMPLOYEE.DeptID%TYPE;
+  
+  -- Declare a cursor to select the highest paid employees
+  CURSOR highest_paid_employees IS
+    SELECT EmpNo, Name, Salary, Designation, DeptID
+    FROM EMPLOYEE
+    ORDER BY Salary DESC
+    FETCH FIRST 5 ROWS ONLY;
+BEGIN
+  -- Open the cursor
+  OPEN highest_paid_employees;
+  
+  -- Fetch and display the employee details
+  LOOP
+    FETCH highest_paid_employees INTO emp_number, emp_name, emp_salary, emp_designation, emp_dept_id;
+    EXIT WHEN highest_paid_employees%NOTFOUND;
+    
+    -- Display the employee information
+    DBMS_OUTPUT.PUT_LINE('Employee Number: ' || emp_number);
+    DBMS_OUTPUT.PUT_LINE('Employee Name: ' || emp_name);
+    DBMS_OUTPUT.PUT_LINE('Salary: ' || emp_salary);
+    DBMS_OUTPUT.PUT_LINE('Designation: ' || emp_designation);
+    DBMS_OUTPUT.PUT_LINE('Department ID: ' || emp_dept_id);
+    DBMS_OUTPUT.PUT_LINE('------------------------------------');
+  END LOOP;
+  
+  -- Close the cursor
+  CLOSE highest_paid_employees;
+END;

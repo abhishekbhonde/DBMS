@@ -1,0 +1,11 @@
+a) INSERT INTO ACTOR (Act_id, Act_Name, Act_Gender)
+VALUES (1, 'Tom Hanks', 'Male');
+
+b)SELECT * FROM ACTOR;
+
+c) UPDATE ACTOR
+SET Act_Gender = 'Female'
+WHERE Act_id = 1;
+
+d) DELETE FROM ACTOR
+WHERE Act_id = 1;

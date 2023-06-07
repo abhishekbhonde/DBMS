@@ -1,0 +1,10 @@
+DECLARE
+  -- Declare a variable to store the loop counter
+  i NUMBER;
+BEGIN
+  -- Start the FOR loop from 1 to 10
+  FOR i IN 1..10 LOOP
+    -- Print the value of i
+    DBMS_OUTPUT.PUT_LINE(i);
+  END LOOP;
+END;

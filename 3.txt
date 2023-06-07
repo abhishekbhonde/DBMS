@@ -1,0 +1,42 @@
+a)SELECT Publisher_Name, COUNT(*) AS Book_Count
+FROM BOOK
+GROUP BY Publisher_Name
+ORDER BY Book_Count ASC;
+
+b) SELECT DISTINCT B.Publisher_Name
+FROM BOOK B
+JOIN BOOK_AUTHORS BA ON B.Book_ISBN = BA.Book_ISBN
+WHERE BA.Author_Name LIKE 'K%';
+
+c) SELECT B.Title, BA.Author_Name
+FROM BOOK B
+JOIN BOOK_AUTHORS BA ON B.Book_ISBN = BA.Book_ISBN
+WHERE B.Book_ISBN = (
+    SELECT Book_ISBN
+    FROM BOOK_AUTHORS
+    GROUP BY Book_ISBN
+    HAVING COUNT(*) = (
+        SELECT MAX(Author_Count)
+        FROM (
+            SELECT Book_ISBN, COUNT(*) AS Author_Count
+            FROM BOOK_AUTHORS
+            GROUP BY Book_ISBN
+        ) AS T
+    )
+);
+
+d)  SELECT DISTINCT Publisher_Name
+FROM BOOK
+ORDER BY Publisher_Name ASC;
+
+e) SELECT COUNT(*) AS Total_Books
+FROM BOOK
+WHERE Date_Of_Publication >= '2014-01-01';
+
+f) DELETE FROM BOOK
+WHERE Book_ISBN IN (
+    SELECT Book_ISBN
+    FROM BOOK_AUTHORS
+    WHERE Author_Name = 'Korth'
+);
+

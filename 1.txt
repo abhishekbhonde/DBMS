@@ -1,0 +1,39 @@
+a) CREATE TABLE BOOK (
+    Book_ISBN INT PRIMARY KEY,
+    Title VARCHAR(255) NOT NULL,
+    Publisher_Name VARCHAR(255),
+    Price DECIMAL(10, 2) CHECK (Price > 0),
+    Date_Of_Publication DATE,
+    Book_Copy INT
+);
+
+CREATE TABLE BOOK_AUTHORS (
+    Book_ISBN INT,
+    Author_Name VARCHAR(255),
+    Author_City VARCHAR(255),
+    PRIMARY KEY (Book_ISBN, Author_Name),
+    FOREIGN KEY (Book_ISBN) REFERENCES BOOK(Book_ISBN)
+);
+
+b)CREATE VIEW BOOK_AUTHOR_INFO AS
+SELECT B.Book_ISBN, B.Title, BA.Author_Name
+FROM BOOK B
+JOIN BOOK_AUTHORS BA ON B.Book_ISBN = BA.Book_ISBN
+ORDER BY B.Book_ISBN ASC;
+
+c) CREATE INDEX idx_Book_Author
+ON BOOK_AUTHORS (Author_Name);
+
+d) CREATE TABLE Book_Auto_Increment (
+    BookID INT AUTO_INCREMENT = 100,
+    BookName VARCHAR(255),
+    PRIMARY KEY (BookID)
+);
+
+INSERT INTO Book_Auto_Increment (BookName) VALUES ('Book 1');
+INSERT INTO Book_Auto_Increment (BookName) VALUES ('Book 2');
+INSERT INTO Book_Auto_Increment (BookName) VALUES ('Book 3');
+INSERT INTO Book_Auto_Increment (BookName) VALUES ('Book 4');
+INSERT INTO Book_Auto_Increment (BookName) VALUES ('Book 5');
+
+e) CREATE SYNONYM LibDB FOR YourDatabaseName;
