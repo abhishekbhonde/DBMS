@@ -1,11 +1,32 @@
-a) INSERT INTO ACTOR (Act_id, Act_Name, Act_Gender)
-VALUES (1, 'Tom Hanks', 'Male');
+a) db.MOVIES.find({ "Dir_id": ObjectId("director_id_of_Hitchcock") }, { "Mov_Title": 1 })
 
-b)SELECT * FROM ACTOR;
+b) db.MOVIE_CAST.aggregate([
+  { $group: { "_id": "$Act_id", "count": { $sum: 1 } } },
+  { $match: { "count": { $gte: 2 } } },
+  { $lookup: { "from": "MOVIES", "localField": "Mov_id", "foreignField": "Mov_id", "as": "movies" } },
+  { $project: { "movies.Mov_Title": 1 } }
+])
 
-c) UPDATE ACTOR
-SET Act_Gender = 'Female'
-WHERE Act_id = 1;
+c) db.MOVIE_CAST.aggregate([
+  { $lookup: { "from": "MOVIES", "localField": "Mov_id", "foreignField": "Mov_id", "as": "movies" } },
+  { $unwind: "$movies" },
+  {
+    $group: {
+      "_id": "$Act_id",
+      "movies_before_2000": {
+        $push: {
+          $cond: [{ $lt: ["$movies.Mov_Year", 2000] }, "$movies.Mov_Title", null]
+        }
+      },
+      "movies_after_2015": {
+        $push: {
+          $cond: [{ $gt: ["$movies.Mov_Year", 2015] }, "$movies.Mov_Title", null]
+        }
+      }
+    }
+  },
+  { $match: { "movies_before_2000": { $ne: [null] }, "movies_after_2015": { $ne: [null] } } },
+  { $project: { "actor_id": "$_id", "_id": 0 } }
+])
 
-d) DELETE FROM ACTOR
-WHERE Act_id = 1;
+d) 
